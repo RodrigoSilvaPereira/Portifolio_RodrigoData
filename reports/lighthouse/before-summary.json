@@ -1,0 +1,30 @@
+{
+  "url": "http://127.0.0.1:4174/",
+  "lighthouse": "12.8.2",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+  "fetchTime": "2026-11-02T20:37:09.294Z",
+  "formFactor": "mobile",
+  "throttlingMethod": "simulate",
+  "throttling": {
+    "rttMs": 150,
+    "throughputKbps": 1638.4,
+    "requestLatencyMs": 562.5,
+    "downloadThroughputKbps": 1474.5600000000002,
+    "uploadThroughputKbps": 675,
+    "cpuSlowdownMultiplier": 4
+  },
+  "scores": {
+    "performance": 28.999999999999996,
+    "accessibility": 92,
+    "best-practices": 96,
+    "seo": 91
+  },
+  "metrics": {
+    "first-contentful-paint": 6920.4226,
+    "largest-contentful-paint": 13305.6339,
+    "cumulative-layout-shift": 0.01173969865385147,
+    "total-blocking-time": 2353.999999999999,
+    "speed-index": 7918.649786704722
+  },
+  "warnings": []
+}

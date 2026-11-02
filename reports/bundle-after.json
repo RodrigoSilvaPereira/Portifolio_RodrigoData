@@ -1,0 +1,25 @@
+{
+  "directory": "dist",
+  "node": "v22.14.0",
+  "unit": "bytes",
+  "files": [
+    {
+      "file": "index-6bfde12f.js",
+      "raw": 1518,
+      "gzip": 782,
+      "brotli": 631
+    },
+    {
+      "file": "index-d9709e0e.js",
+      "raw": 179070,
+      "gzip": 57490,
+      "brotli": 50340
+    },
+    {
+      "file": "index-e92b5741.css",
+      "raw": 32739,
+      "gzip": 7019,
+      "brotli": 6045
+    }
+  ]
+}

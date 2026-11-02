@@ -1,102 +1,122 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { navigation, profile } from "../content";
+import Icon from "./Icon";
 
-import { styles } from "../styles";
-import { navLinks } from "../constants";
-import { logo, menu, close } from "../assets";
-
-const Navbar = () => {
-  const [active, setActive] = useState("");
-  const [toggle, setToggle] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
+export default function Navbar({ home }) {
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("inicio");
+  const trigger = useRef(null);
+  const menu = useRef(null);
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      if (scrollTop > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+    if (!open) return;
+    const close = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        trigger.current?.focus();
       }
     };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    const outside = (event) => {
+      if (
+        !menu.current?.contains(event.target) &&
+        !trigger.current?.contains(event.target)
+      )
+        setOpen(false);
+    };
+    document.addEventListener("keydown", close);
+    document.addEventListener("pointerdown", outside);
+    return () => {
+      document.removeEventListener("keydown", close);
+      document.removeEventListener("pointerdown", outside);
+    };
+  }, [open]);
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 900px)");
+    const close = () => setOpen(false);
+    media.addEventListener("change", close);
+    return () => media.removeEventListener("change", close);
   }, []);
-
+  useEffect(() => {
+    if (!home) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries)
+          if (entry.isIntersecting) setActive(entry.target.id);
+      },
+      { rootMargin: "-15% 0px -65% 0px" },
+    );
+    navigation.forEach(([id]) => {
+      const node = document.getElementById(id);
+      if (node) observer.observe(node);
+    });
+    return () => observer.disconnect();
+  }, [home]);
+  function navigate(_event, id) {
+    setOpen(false);
+    if (home) {
+      setActive(id);
+      document.getElementById(id)?.focus({ preventScroll: true });
+    }
+  }
   return (
-    <nav
-      className={`${
-        styles.paddingX
-      } w-full flex items-center py-5 fixed top-0 z-20 ${
-        scrolled ? "bg-primary" : "bg-transparent"
-      }`}
-    >
-      <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
-        <Link
-          to='/'
-          className='flex items-center gap-2'
-          onClick={() => {
-            setActive("");
-            window.scrollTo(0, 0);
+    <header className="site-header">
+      <div className="container header-inner">
+        <a
+          className="brand"
+          href={home ? "#inicio" : "/"}
+          aria-label={`${profile.shortName}, início`}
+        >
+          <span className="brand-symbol" aria-hidden="true">
+            r<span>.</span>
+          </span>
+          <span>
+            Rodrigo Pereira
+            <span className="brand-subtitle">DADOS & IA APLICADA</span>
+          </span>
+        </a>
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-expanded={open}
+          aria-controls="navigation"
+          aria-label={open ? "Fechar menu" : "Abrir menu"}
+          onClick={() => setOpen((value) => !value)}
+          ref={trigger}
+        >
+          <Icon name={open ? "close" : "menu"} />
+        </button>
+        <nav
+          id="navigation"
+          aria-label="Navegação principal"
+          className={open ? "navigation is-open" : "navigation"}
+          ref={menu}
+          onBlur={(event) => {
+            if (
+              !event.currentTarget.contains(event.relatedTarget) &&
+              event.relatedTarget !== trigger.current
+            )
+              setOpen(false);
           }}
         >
-          <img src={logo} alt="logo" className="w-9 h-9 object-contain" />
-          <p className='text-white text-[18px] font-bold cursor-pointer flex '>
-            Rodrigo &nbsp;
-            <span className='sm:block hidden'> | Data Specialist</span>
-          </p>
-        </Link>
-
-        <ul className='list-none hidden sm:flex flex-row gap-10'>
-          {navLinks.map((nav) => (
-            <li
-              key={nav.id}
-              className={`${
-                active === nav.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(nav.title)}
+          {navigation.map(([id, title]) => (
+            <a
+              key={id}
+              href={`${home ? "" : "/"}#${id}`}
+              aria-current={home && active === id ? "location" : undefined}
+              onClick={(event) => navigate(event, id)}
             >
-              <a href={`#${nav.id}`}>{nav.title}</a>
-            </li>
+              {title}
+            </a>
           ))}
-        </ul>
-
-        <div className='sm:hidden flex flex-1 justify-end items-center'>
-          <img
-            src={toggle ? close : menu}
-            alt='menu'
-            className='w-[28px] h-[28px] object-contain'
-            onClick={() => setToggle(!toggle)}
-          />
-
-          <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+          <a
+            className="nav-linkedin"
+            href={profile.linkedin}
+            target="_blank"
+            rel="noreferrer"
           >
-            <ul className='list-none flex justify-end items-start flex-1 flex-col gap-4'>
-              {navLinks.map((nav) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                    active === nav.title ? "text-white" : "text-secondary"
-                  }`}
-                  onClick={() => {
-                    setToggle(!toggle);
-                    setActive(nav.title);
-                  }}
-                >
-                  <a href={`#${nav.id}`}>{nav.title}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            LinkedIn <Icon name="external" size={14} />
+          </a>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
-};
-
-export default Navbar;
+}

@@ -1,0 +1,19 @@
+{
+  "directory": ".qa/baseline",
+  "node": "v22.14.0",
+  "unit": "bytes",
+  "files": [
+    {
+      "file": "index-472a9963.js",
+      "raw": 1125756,
+      "gzip": 327231,
+      "brotli": 264984
+    },
+    {
+      "file": "index-4abe70fa.css",
+      "raw": 22816,
+      "gzip": 5165,
+      "brotli": 4500
+    }
+  ]
+}

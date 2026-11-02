@@ -1,89 +1,61 @@
-<!-- ========================= -->
-<!-- README.md - Portfólio de Rodrigo -->
-<!-- ========================= -->
+# Rodrigo Pereira — Dados e IA Aplicada
 
-# 👋 Olá! Eu sou o Rodrigo
+Portfólio em português brasileiro com casos profissionais de automação, BI e desenvolvimento assistido por agentes de IA. React 18 e Vite 4, com CSS e componentes sem dependências de animação ou WebGL.
 
-Desenvolvedor de Dados e Analista focado em transformar dados brutos em insights e soluções escaláveis. Neste repositório, apresento minha trajetória, habilidades, experiências e projetos, com ênfase em Engenharia de Dados, ETL, Cloud e Análise.
+## Executar localmente
 
----
+Requer Node.js 22 e npm. No PowerShell com scripts desabilitados, use `npm.cmd` no lugar de `npm`.
 
-## 📖 Sumário
+```sh
+npm ci
+npm run dev
+```
 
-- [Sobre Mim](#-sobre-mim)  
-- [Objetivo](#-objetivo)  
-- [Principais Habilidades](#-principais-habilidades)  
-- [Ferramentas e Tecnologias](#-ferramentas-e-tecnologias)  
-- [Contato](#-contato)  
+Para conferir a entrega de produção, incluindo o HTML indexável das páginas:
 
----
+```sh
+npm run build
+npm run preview -- --host 127.0.0.1 --port 4173
+```
 
-## 👨‍💻 Sobre Mim
+O build gera a home, três páginas de casos, `404.html`, `robots.txt` e `sitemap.xml` em `dist/`. O build SSR em `dist-ssr/` é usado somente para gerar o HTML; a hospedagem continua estática, sem backend. O navegador hidrata esse conteúdo com React.
 
-- **Cargo / Perfil**: Desenvolvedor de Dados e Analista de Dados  
-- **Paixões**: Automação de pipelines, modelagem de dados, visualização de insights e aplicação de ML para resolver problemas reais.  
-- **Trajetória**:
-  - Ex-Trainee e Estagiário de Dados na **Compass UOL**, atuando em projetos de ingestão e processamento de dados.
-  - Estudante de **Análise e Desenvolvimento de Sistemas** na FATEC-REG.
-  - Experiência prévia em ensino de informática e manutenção de computadores, o que reforça minha habilidade de comunicação e didática.
+## Conteúdo e rotas
 
-> “Transformar dados em conhecimento é a ponte entre o caos e a clareza.”  
-> — Rodrigo Pereira
+`src/content.js` concentra perfil, links, currículo, métricas, casos, experiências, cursos e metadados. O conteúdo usa os fatos do briefing e do PDF fornecidos em 02/11/2026. As ferramentas específicas dos dois BIs não foram inferidas a partir da lista geral de competências.
 
----
+- `/`
+- `/casos/automacao-relatorios/`
+- `/casos/bi-manutencao/`
+- `/casos/inteligencia-combustivel/`
 
-## 🎯 Objetivo
+Os antigos fragmentos `#about`, `#work` e `#contact` continuam funcionando. As novas seções usam `#inicio`, `#casos`, `#ia-na-pratica`, `#experiencia`, `#formacao` e `#contato`.
 
-Construir e otimizar pipelines de dados confiáveis, escaláveis e automatizados, promovendo governança e qualidade de dados, e fornecer análises que auxiliem na tomada de decisão. Desejo também aplicar técnicas de Machine Learning em cenários práticos, integrando resultados em dashboards e APIs para usuários finais.
+O PDF em `public/documents/` é a cópia integral do currículo atualizado fornecido por Rodrigo. Não foi reescrito. `public/social-card.png` é uma composição tipográfica local para compartilhamento, exportada com `node scripts/social-card.mjs`.
 
----
+## Contato
 
-## 🚀 Principais Habilidades
+As três variáveis EmailJS existentes foram preservadas. Copie `.env.example` para `.env` e preencha os valores válidos, ou mantenha-os nas variáveis de build da Vercel. O formulário não é habilitado sem a configuração completa; e-mail e LinkedIn permanecem disponíveis.
 
-### Engenharia de Dados
-- **ETL/ELT**: Planejamento, desenvolvimento e orquestração de pipelines (Talend, Python, scripts Bash).  
-- **Processamento**: Batch e streaming, incluindo uso de frameworks como Apache Spark (via Python/Databricks quando aplicável).  
-- **Modelagem de Dados**: Modelagem relacional e esquemas em data lakes (ex.: zonas de staging, raw, curated).  
-- **Qualidade e Governança**: Boas práticas para garantir integridade, versionamento e rastreabilidade de dados.
+Não inclua chaves privadas no frontend. As variáveis `VITE_*` são públicas e incorporadas ao build. Os testes interceptam todas as chamadas a `api.emailjs.com`; nenhuma mensagem real é enviada.
 
-### Análise de Dados
-- **Exploração e Visualização**: Pandas, NumPy, Power BI, Amazon QuickSight e Excel para criação de relatórios e dashboards.  
-- **SQL Avançado**: Consultas, junções complexas, otimização de queries e análise de performance (MySQL, Athena).  
-- **Interpretação de Resultados**: Extração de insights acionáveis e elaboração de storytelling com dados.
+## Verificações
 
-### Cloud e Infraestrutura
-- **AWS**: S3, EC2, IAM, Lambda (event-driven), Glue (ou equivalente), monitoramento e boas práticas de segurança.  
-- **Containers e CI/CD**: Conceitos básicos de Docker e pipelines de integração contínua (GitHub Actions, por exemplo).  
-- **APIs e Integração**: Consumo e criação de APIs REST para orquestração de dados e disponibilização de resultados.
+```sh
+npm run lint
+npm run build
+npm test
+npm run measure
+```
 
-### Machine Learning (nível introdutório/intermediário)
-- **Bibliotecas Python**: scikit-learn, pandas, NumPy.  
-- **Fluxo de ML**: Pré-processamento, treinamento, validação, deploy simples de modelos.  
-- **Tracking**: Uso de ferramentas como MLflow (se aplicável) para registrar experimentos.
+Os testes usam o Google Chrome instalado (`channel: 'chrome'` no Playwright), um preview de produção na porta 4173 e um servidor Vite temporário na porta 4175 para o formulário isolado. A fixture do formulário não faz parte de `dist/`. A suíte cobre home e casos em 360, 768 e 1440 px, axe WCAG A/AA, ausência de overflow e erros de console, menu por teclado, âncoras, redução de movimento, HTML sem JS, download do PDF e respostas simuladas de contato.
 
-### Outras Competências
-- **Versionamento**: Git & GitHub (fluxos de branch, pull requests, code review).  
-- **Comunicação**: Documentação clara (README, comentários em código, diagramas), apresentação de resultados para públicos diversos.  
-- **Autodidata**: Aprendo novas tecnologias e adapto-me a diferentes contextos.  
-- **Ferramentas de Notebooks**: Jupyter, VS Code.
+`node scripts/capture-preview.mjs` salva capturas em `reports/previews/` com o preview aberto. `node scripts/performance.mjs <URL> <rótulo>` executa Lighthouse e salva relatório HTML, JSON e resumo. `scripts/measure-bundle.mjs` mede bytes brutos, gzip e Brotli com Node, sem confundir compressão local com transferência de rede.
 
----
+Resultados, ambiente e pendências: [reports/VALIDACAO.md](reports/VALIDACAO.md).
 
-## 🧰 Ferramentas e Tecnologias
+## Publicação
 
-- **Linguagens**: Python, SQL, JavaScript, Bash, HTML/CSS (básico).  
-- **Bancos de Dados**: MySQL, MongoDB, Athena.  
-- **Cloud**: AWS (S3, EC2, Lambda, IAM, outros serviços de apoio).  
-- **ETL**: Talend, scripts customizados em Python/Bash.  
-- **Visualização**: Power BI, Amazon QuickSight, Excel avançado.  
-- **Versionamento & Colaboração**: Git, GitHub, GitHub Actions (CI).  
-- **Ambientes de Desenvolvimento**: VS Code, ambientes virtuais Python, Docker (quando aplicável).  
-- **Documentação e Gestão de Conhecimento**: Obsidian, Markdown, wikis internas.
+Nenhuma publicação foi executada. `vercel.json` aponta o build para `dist/`, com URLs limpas. Antes de uma publicação autorizada, confira as variáveis EmailJS na Vercel e mantenha o domínio canônico em `src/content.js` e os endereços da imagem social em `index.html` coerentes com o domínio final.
 
----
-
-## 🤝 Contato
-
-- **LinkedIn**: [linkedin.com/in/rodrigo-pereira-b39914210](https://www.linkedin.com/in/rodrigo-pereira-b39914210/)  
-- **Portfólio Interativo**: [datarodrigo.vercel.app](https://datarodrigo.vercel.app/)  
-- **E-mail**: 2005rodrigosilva@gmail.com  
+Os assets antigos foram arquivados localmente em `.qa/removed-assets/`, fora do controle de versão e do build. As dependências Three.js, React Three Fiber/Drei, maath, tilt, Framer Motion, timeline, roteamento sem uso e Tailwind foram retiradas. O histórico Git também preserva a versão anterior.

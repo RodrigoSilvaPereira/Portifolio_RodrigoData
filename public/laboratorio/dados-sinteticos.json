@@ -1,0 +1,44 @@
+[
+  {
+    "id": "a1",
+    "branch": "Filial A",
+    "station": "Posto A1",
+    "price": 6.2,
+    "liters": 1000
+  },
+  {
+    "id": "a2",
+    "branch": "Filial A",
+    "station": "Posto A2",
+    "price": 6.45,
+    "liters": 500
+  },
+  {
+    "id": "b1",
+    "branch": "Filial B",
+    "station": "Posto B1",
+    "price": 6.1,
+    "liters": 800
+  },
+  {
+    "id": "b2",
+    "branch": "Filial B",
+    "station": "Posto B2",
+    "price": 6.35,
+    "liters": 1200
+  },
+  {
+    "id": "c1",
+    "branch": "Filial C",
+    "station": "Posto C1",
+    "price": 5.95,
+    "liters": 900
+  },
+  {
+    "id": "c2",
+    "branch": "Filial C",
+    "station": "Posto C2",
+    "price": 6.05,
+    "liters": 600
+  }
+]

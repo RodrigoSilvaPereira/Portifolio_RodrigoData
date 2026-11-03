@@ -1,5 +1,7 @@
 # Reformulação do portfólio — validação local
 
+Este relatório registra a primeira reformulação. A expansão posterior com laboratório, uso confirmado pela equipe e novos testes está em [LABORATORIO-IA.md](LABORATORIO-IA.md). Os bundles e resultados abaixo são históricos.
+
 Entrega de 02/11/2026. Implementação local; nenhuma publicação, push ou envio de e-mail real foi executado.
 
 ## Resultado implementado

@@ -1,6 +1,8 @@
 import Navbar from "./components/Navbar";
 import Contact from "./components/Contact";
 import Icon from "./components/Icon";
+import Laboratory from "./components/Laboratory";
+import { labPath } from "./lab/content";
 import {
   Flow,
   Footer,
@@ -16,6 +18,7 @@ import {
   experiences,
   getPage,
   profile,
+  operationalUse,
   skills,
   technicalProject,
   workflow,
@@ -211,6 +214,9 @@ function Cases() {
           código, telas ou dados internos. Cada página explica contribuição,
           evidência e limitações.
         </p>
+        <p className="operational-use">
+          <strong>{operationalUse.status}.</strong> {operationalUse.statement}
+        </p>
       </div>
     </section>
   );
@@ -288,6 +294,19 @@ function AIPractice() {
               </dd>
             </div>
           </dl>
+        </div>
+        <div className="ai-lab-link">
+          <div>
+            <h3>Explore o laboratório de IA aplicada.</h3>
+            <p>
+              Prompts estruturados, respostas registradas e uma ferramenta
+              interativa com dados sintéticos. Código e critérios de validação
+              disponíveis.
+            </p>
+          </div>
+          <a className="button button-primary" href={labPath}>
+            Abrir laboratório <Icon size={17} />
+          </a>
         </div>
       </div>
     </section>
@@ -538,6 +557,7 @@ function CasePage({ item }) {
                 <h2>Resultado e evidência</h2>
                 <p>{item.result}</p>
                 <p>{item.evidence}</p>
+                <p>{operationalUse.statement}</p>
               </section>
               <section>
                 <h2>Escopo e limites</h2>
@@ -565,7 +585,11 @@ function CasePage({ item }) {
                 </div>
                 <div>
                   <dt>Evidência</dt>
-                  <dd>Relato confirmado por Rodrigo e currículo fornecido.</dd>
+                  <dd>{operationalUse.evidence}</dd>
+                </div>
+                <div>
+                  <dt>{operationalUse.status}</dt>
+                  <dd className="adoption-dd">{operationalUse.audience}</dd>
                 </div>
               </dl>
               <ResumeLink className="text-link" />
@@ -631,20 +655,27 @@ function SyntheticExample({ item }) {
           ))}
         </tbody>
       </table>
+      {item.slug === "inteligencia-combustivel" && (
+        <a className="text-link" href={`${labPath}#demonstracao`}>
+          Explorar a ferramenta com dados sintéticos <Icon size={16} />
+        </a>
+      )}
     </section>
   );
 }
 
 export default function App({ path = "/" }) {
-  const { item, notFound } = getPage(path);
+  const { item, laboratory, notFound } = getPage(path);
   return (
     <>
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
       </a>
-      <Navbar home={!item && !notFound} />
+      <Navbar home={!item && !laboratory && !notFound} />
       {item ? (
         <CasePage item={item} />
+      ) : laboratory ? (
+        <Laboratory />
       ) : notFound ? (
         <>
           <main id="conteudo" tabIndex={-1} className="container not-found">

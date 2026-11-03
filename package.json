@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "build": "node scripts/build-lab-artifacts.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint src scripts tests *.config.js",
-    "test": "playwright test",
+    "test": "node --test tests/lab.test.mjs && playwright test",
+    "lab:verify": "node scripts/verify-lab.mjs",
     "measure": "node scripts/measure-bundle.mjs"
   },
   "dependencies": {

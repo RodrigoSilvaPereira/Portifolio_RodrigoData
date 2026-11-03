@@ -1,5 +1,7 @@
 // Fonte: briefing e currículo fornecidos por Rodrigo em 02/11/2026.
 // Resultados corporativos confirmados por ele; nenhum dado interno é publicado.
+import { lab, labPath } from "./lab/content";
+
 export const profile = {
   name: "Rodrigo da Silva Pereira",
   shortName: "Rodrigo Pereira",
@@ -23,6 +25,16 @@ export const navigation = [
   ["experiencia", "Experiência"],
   ["contato", "Contato"],
 ];
+
+// Uso confirmado por Rodrigo nesta conversa em 02/11/2026, sem datas adicionais.
+export const operationalUse = {
+  status: "Em uso na operação",
+  audience: "Equipe da Torre de Controle e diretoria",
+  statement:
+    "As automações e os dashboards são utilizados pela equipe da Torre de Controle e pela diretoria da Gritsch, conforme confirmação de Rodrigo.",
+  evidence:
+    "Uso confirmado por Rodrigo; resultados relatados no currículo e nos casos. Dados internos não são publicados.",
+};
 
 export const cases = [
   {
@@ -292,23 +304,28 @@ export function caseUrl(item) {
 export function getPage(pathname) {
   const path = pathname === "/" ? "/" : `${pathname.replace(/\/$/, "")}/`;
   const item = cases.find((entry) => caseUrl(entry) === path);
-  return { item, notFound: path !== "/" && !item };
+  const laboratory = path === labPath;
+  return { item, laboratory, notFound: path !== "/" && !item && !laboratory };
 }
 
 export function getMetadata(pathname) {
-  const { item, notFound } = getPage(pathname);
+  const { item, laboratory, notFound } = getPage(pathname);
   const title = item
     ? `${item.shortTitle} | ${profile.shortName}`
-    : notFound
-      ? `Página não encontrada | ${profile.shortName}`
-      : `${profile.shortName} | Dados e IA Aplicada`;
+    : laboratory
+      ? `${lab.title} | ${profile.shortName}`
+      : notFound
+        ? `Página não encontrada | ${profile.shortName}`
+        : `${profile.shortName} | Dados e IA Aplicada`;
   const description = item
     ? `${item.summary} ${item.metricLabel}: ${item.metric}.`
-    : "Rodrigo da Silva Pereira. Automações, soluções de dados e desenvolvimento com agentes de IA. Casos reais de eficiência operacional na Gritsch Logística.";
+    : laboratory
+      ? lab.description
+      : "Rodrigo da Silva Pereira. Automações, soluções de dados e desenvolvimento com agentes de IA. Casos reais de eficiência operacional na Gritsch Logística.";
   return {
     title,
     description,
-    canonical: `${profile.site}${item ? caseUrl(item) : "/"}`,
+    canonical: `${profile.site}${item ? caseUrl(item) : laboratory ? labPath : "/"}`,
     notFound,
   };
 }

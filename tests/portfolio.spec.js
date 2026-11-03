@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { cases, caseUrl, profile } from "../src/content";
+import { labPath } from "../src/lab/content";
 
 // Never allow a real EmailJS request in any automated test.
 test.beforeEach(async ({ page }) => {
@@ -19,7 +20,7 @@ for (const width of [360, 768, 1440]) {
     page.on("console", (message) => {
       if (message.type() === "error") errors.push(message.text());
     });
-    for (const path of ["/", ...cases.map(caseUrl)]) {
+    for (const path of ["/", ...cases.map(caseUrl), labPath]) {
       const response = await page.goto(path);
       expect(response.status()).toBe(200);
       await expect(page.locator("h1")).toHaveCount(1);
@@ -94,7 +95,7 @@ test("essential content is server rendered, links resolve and PDF downloads inta
   page,
   request,
 }) => {
-  for (const route of ["/", ...cases.map(caseUrl)]) {
+  for (const route of ["/", ...cases.map(caseUrl), labPath]) {
     const response = await request.get(route);
     const html = await response.text();
     expect(html).toContain("<h1");

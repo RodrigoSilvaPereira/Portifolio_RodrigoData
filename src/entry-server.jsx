@@ -1,8 +1,9 @@
 import { renderToString } from "react-dom/server";
 import App from "./App";
 import { cases, caseUrl, getMetadata, profile } from "./content";
+import { labPath } from "./lab/content";
 
-export const routes = ["/", ...cases.map(caseUrl), "/404/"];
+export const routes = ["/", ...cases.map(caseUrl), labPath, "/404/"];
 export function render(path) {
   const meta = getMetadata(path);
   const person = {
